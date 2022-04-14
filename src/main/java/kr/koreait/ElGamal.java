@@ -19,13 +19,13 @@ import java.security.spec.X509EncodedKeySpec;
 
 public class ElGamal {
 
-    public static final KeyPair genKeyPair()
+    public static KeyPair genKeyPair()
     {
 
         return generateElGamalKeyPair(2048);
     }
 
-    public static final KeyPair generateElGamalKeyPair(int keySize)
+    public static KeyPair generateElGamalKeyPair(int keySize)
     {
         try {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("ELGAMAL", "BC");
@@ -39,7 +39,7 @@ public class ElGamal {
         }
     }
 
-    public static final String writePrivatePEM(PrivateKey privateKey) throws IOException {
+    public static String writePrivatePEM(PrivateKey privateKey) throws IOException {
         StringWriter writer = new StringWriter();
         PemWriter pemWriter = new PemWriter(writer);
         pemWriter.writeObject(new PemObject("PRIVATE KEY", privateKey.getEncoded()));
@@ -69,7 +69,7 @@ public class ElGamal {
     }
 
 
-    public static final String writePublicPEM(PublicKey publicKey) throws IOException {
+    public static String writePublicPEM(PublicKey publicKey) throws IOException {
         StringWriter writer = new StringWriter();
         PemWriter pemWriter = new PemWriter(writer);
         pemWriter.writeObject(new PemObject("PUBLIC KEY", publicKey.getEncoded()));
