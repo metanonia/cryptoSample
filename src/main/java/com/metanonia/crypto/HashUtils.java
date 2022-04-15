@@ -1,4 +1,4 @@
-package kr.koreait;
+package com.metanonia.crypto;
 
 
 import java.math.BigInteger;
@@ -50,6 +50,33 @@ public class HashUtils {
         }
         catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static cc.redberry.rings.bigint.BigInteger SHA256(cc.redberry.rings.bigint.BigInteger message) {
+        try {
+            MessageDigest sh = MessageDigest.getInstance("SHA-256");
+            sh.reset();
+            sh.update(message.toByteArray());
+            byte[] byteData = sh.digest();
+
+            return (new cc.redberry.rings.bigint.BigInteger(byteData));
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+    public static cc.redberry.rings.bigint.BigInteger SHA256(String message) {
+        try {
+            MessageDigest sh = MessageDigest.getInstance("SHA-256");
+            sh.reset();
+            sh.update(message.getBytes());
+            byte[] byteData = sh.digest();
+
+            return (new cc.redberry.rings.bigint.BigInteger(byteData));
+        }
+        catch (Exception e) {
             return null;
         }
     }

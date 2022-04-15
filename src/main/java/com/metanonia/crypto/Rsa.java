@@ -1,10 +1,9 @@
-package kr.koreait;
+package com.metanonia.crypto;
 
 import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
-import sun.security.rsa.RSAKeyPairGenerator;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -41,7 +40,7 @@ public class Rsa {
     /**
      * Public Key로 RSA 암호화를 수행
      */
-    public static String encryptRSA(byte[] plain, PublicKey publicKey) {
+    public static String encrypt(PublicKey publicKey, byte[] plain) {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -58,7 +57,7 @@ public class Rsa {
     /**
      * Private Key로 RSA 복호화를 수행
      */
-    public static String decryptRSA(String encrypted, PrivateKey privateKey) {
+    public static String decrypt(PrivateKey privateKey, String encrypted) {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             byte[] byteEncrypted = Base64.getDecoder().decode(encrypted.getBytes());
@@ -126,5 +125,32 @@ public class Rsa {
         }
 
         return privateKey;
+    }
+
+
+    public static String sign(byte[]msg, PrivateKey privateKey) {
+        try {
+            Signature rsa = Signature.getInstance("RSA");
+            rsa.initSign(privateKey);
+            rsa.update(msg);
+            return Hex.encodeHexString(rsa.sign());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Boolean verify(String signed, byte[]msg, PublicKey publicKey) {
+        try {
+            Signature rsa = Signature.getInstance("RSA");
+            rsa.initVerify(publicKey);
+            rsa.update(msg);
+            return rsa.verify(Hex.decodeHex(signed));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

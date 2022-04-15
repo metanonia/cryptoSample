@@ -1,4 +1,4 @@
-package kr.koreait;
+package com.metanonia.crypto;
 
 import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.ECNamedCurveTable;
@@ -78,7 +78,7 @@ public class ECC {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
     }
 

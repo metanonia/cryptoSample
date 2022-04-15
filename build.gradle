@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.70'
+    implementation group: 'cc.redberry', name: 'rings', version: '2.5.8'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
     implementation group: 'clojure-interop', name: 'javax.crypto', version: '1.0.5'

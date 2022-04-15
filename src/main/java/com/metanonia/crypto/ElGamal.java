@@ -1,7 +1,7 @@
-package kr.koreait;
+package com.metanonia.crypto;
 
+import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.util.encoders.Hex;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.bouncycastle.util.io.pem.PemWriter;
@@ -98,11 +98,11 @@ public class ElGamal {
         return publicKey;
     }
 
-    public static String encrypt(PublicKey publicKey, String message) {
+    public static String encrypt(PublicKey publicKey, byte[] bytes) {
         try {
             Cipher c1 = Cipher.getInstance("ElGamal", "BC");
             c1.init(Cipher.ENCRYPT_MODE, publicKey, new SecureRandom());
-            return Hex.toHexString(c1.doFinal(message.getBytes(StandardCharsets.UTF_8)));
+            return Hex.encodeHexString(c1.doFinal(bytes));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +112,7 @@ public class ElGamal {
 
     public static String decrypt(PrivateKey privateKey, String message) {
         try {
-            byte[] bytes = Hex.decode(message);
+            byte[] bytes = Hex.decodeHex(message);
             Cipher c1 = Cipher.getInstance("ElGamal", "BC");
             c1.init(Cipher.DECRYPT_MODE, privateKey);
             return new String(c1.doFinal(bytes));
